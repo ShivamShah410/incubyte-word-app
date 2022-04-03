@@ -18,19 +18,20 @@ public class WordService {
 		return repo.findAll();
 	}
 
-	public Words updateWord() {
-		// TODO Auto-generated method stub
-		return null;
+	public Words updateWord(Words w) {
+		
+		Words updatedWprd = repo.save(w);
+		return updatedWprd;
 	}
 
-	public Words deleteWord() {
-		// TODO Auto-generated method stub
-		return null;
+	public String deleteWord(int id) {
+		repo.deleteById(id);
+		return "success";
 	}
 
 	public Words createWord(Words word) {
 		repo.save(word);
-		return findWord(word.getWord());
+		return repo.findByWord(word.getWord());
 	}
 	
 	public Words findWord(String name) {
