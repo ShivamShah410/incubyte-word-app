@@ -2,38 +2,8 @@ $(document).ready(function () {
   loadWords();
 });
 
-function loadWords() {
-  var output = $("#tbody");
-  output.empty();
-  $.ajax({
-    type: "GET",
-    url: "/words/all",
-    success: function (data) {
-      $.each(data, function (i, item) {
-        // output.append("<li>" + item.word + "</li>");
-        output.append(
-          "<tr>" +
-            "<td>" +
-            item.word +
-            "</td>" +
-            "<td>" +
-            "<button id=" +
-            item.id +
-            " class='edit'>Edit</button>" +
-            "</td>" +
-            "<td>" +
-            "<button id=" +
-            item.id +
-            " class='delete'>Delete</button>" +
-            "</td>" +
-            "</tr>"
-        );
-      });
-    },
-  });
-}
-
-$(".delete").on("click", function () {
+$("body").on("click", ".delete", function () {
+  console.log("click");
   if (confirm("Do you really want to delete this word?")) {
     var delEle = $(this);
     var id = $(this).attr("id");
@@ -51,7 +21,7 @@ $(".delete").on("click", function () {
   }
 });
 
-$(".edit").on("click", function () {
+$("body").on("click", ".edit", function () {
   var editEle = $(this);
   var prevWord = editEle.parent().siblings()[0].innerText;
   var id = $(this).attr("id");
@@ -85,6 +55,7 @@ $(".edit").on("click", function () {
 
 $("#addWord").on("click", function () {
   var input = $("#ipword");
+  var output = $("#tbody");
   if (input.val() !== "" && input.val() !== null) {
     var ip = {
       word: input.val(),
@@ -127,3 +98,34 @@ $("#addWord").on("click", function () {
     alert("please enter some value!!");
   }
 });
+
+function loadWords() {
+  var output = $("#tbody");
+  output.empty();
+  $.ajax({
+    type: "GET",
+    url: "/words/all",
+    success: function (data) {
+      $.each(data, function (i, item) {
+        // output.append("<li>" + item.word + "</li>");
+        output.append(
+          "<tr>" +
+            "<td>" +
+            item.word +
+            "</td>" +
+            "<td>" +
+            "<button id=" +
+            item.id +
+            " class='edit'>Edit</button>" +
+            "</td>" +
+            "<td>" +
+            "<button id=" +
+            item.id +
+            " class='delete'>Delete</button>" +
+            "</td>" +
+            "</tr>"
+        );
+      });
+    },
+  });
+}
